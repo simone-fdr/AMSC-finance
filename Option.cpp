@@ -1,6 +1,6 @@
-#include <Option.hpp>
+#include "Option.hpp"
 
-VanillaOption::VanillaOption(const BridgePayOff& payOff_, double expiry_) : expiry(expiry_) {}
+VanillaOption::VanillaOption(const PayOffBridge& payOff_, double expiry_) : expiry(expiry_) {}
 
 double VanillaOption::getExpiry() const {
     return expiry;

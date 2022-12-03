@@ -1,7 +1,7 @@
 #ifndef OPTION_HPP
 #define OPTION_HPP
 
-#include <PayOffBridge.h>
+#include "PayOffBridge.hpp"
 
 class VanillaOption{
     public:
@@ -9,7 +9,7 @@ class VanillaOption{
     double getExpiry() const;
     double payOff(double spot) const;
     private:
-    double Expiry;
+    double expiry;
     PayOff* payOffPtr;
 };
 #endif

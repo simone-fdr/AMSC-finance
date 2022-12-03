@@ -1,7 +1,7 @@
 #ifndef PAYOFFBRIDGE_HPP
 #define PAYOFFBRIDGE_HPP
 
-#include<PayOff.hpp>
+#include "PayOff.hpp"
 
 class PayOffBridge {
     public:
@@ -15,7 +15,7 @@ class PayOffBridge {
     };
 
 inline double PayOffBridge::operator()(double Spot) const {
-    return ThePayOffPtr->operator ()(Spot);
+    return payOffPtr->operator ()(Spot);
 }
 
 #endif

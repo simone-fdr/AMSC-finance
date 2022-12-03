@@ -1,7 +1,8 @@
-#include PayOff1.h
-#include MinMax.h
+#include "PayOff.hpp"
+#include <algorithm>
+#include <math.h>
 
-PayOffCall::PayOffCall(double strike_) : Strike(strike_){}
+PayOffCall::PayOffCall(double strike_) : strike(strike_){}
 
 double PayOffCall::operator () (double spot) const {
     return (spot-strike > 0) * (spot-strike);
@@ -12,7 +13,7 @@ PayOff* PayOffCall::clone() const {
 }
 
 
-PayOffPut::PayOffPut(double strike_) : Strike(strike_) {}
+PayOffPut::PayOffPut(double strike_) : strike(strike_) {}
 
 double PayOffPut::operator () (double spot) const {
     return (strike-spot > 0) * (strike - spot);
@@ -39,7 +40,7 @@ PayOffPowerCall::PayOffPowerCall(double strike_, double power_)
                                         :strike(strike_), power(power_){}
 
 double PayOffPowerCall::operator()(double spot) const {
-    return std::max(std::pow(spot, power) - strike, 0);
+    return std::max(std::pow(spot, power) - strike, 0.);
 }
 
 PayOff* PayOffPowerCall::clone() const {
@@ -51,7 +52,7 @@ PayOffPowerPut::PayOffPowerPut(double strike_, double power_)
                                         :strike(strike_), power(power_){}
 
 double PayOffPowerPut::operator()(double spot) const {
-    return std::max(strike - std::pow(spot, power), 0);
+    return std::max(strike - std::pow(spot, power), 0.);
 }
 
 PayOff* PayOffPowerPut::clone() const {

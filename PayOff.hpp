@@ -1,7 +1,7 @@
 #ifndef PAYOFF_HPP
 #define PAYOFF_HPP
 
-class AbstractPayOff{
+class PayOff{
     public:
     PayOff(){};
     virtual PayOff* clone() const=0;
@@ -10,7 +10,7 @@ class AbstractPayOff{
     private:
 };
 
-class PayOffCall : public AbstractPayOff {
+class PayOffCall : public PayOff {
     public:
     PayOffCall(double strike_);
     virtual PayOff* clone() const;
@@ -20,7 +20,7 @@ class PayOffCall : public AbstractPayOff {
     double strike;
 };
 
-class PayOffPut : public AbstractPayOff {
+class PayOffPut : public PayOff {
     public:
     PayOffPut(double strike_);
     virtual PayOff* clone() const;
@@ -30,7 +30,7 @@ class PayOffPut : public AbstractPayOff {
     double strike;
 };
 
-class PayOffDoubleDigital : public AbstractPayOff {
+class PayOffDoubleDigital : public PayOff {
     public:
     PayOffDoubleDigital(double lowerLevel_, double upperLevel_);
     virtual PayOff* clone() const;
@@ -41,7 +41,7 @@ class PayOffDoubleDigital : public AbstractPayOff {
     double upperLevel;
 };
 
-class PayOffPowerCall : public AbstractPayOff{
+class PayOffPowerCall : public PayOff{
     public:
     PayOffPowerCall(double strike_, double power);
     virtual PayOff* clone() const;
@@ -50,9 +50,9 @@ class PayOffPowerCall : public AbstractPayOff{
     private:
     double strike;
     double power;
-}
+};
 
-class PayOffPowerPut : public AbstractPayOff{
+class PayOffPowerPut : public PayOff{
     public:
     PayOffPowerPut(double strike_, double power);
     virtual PayOff* clone() const;
@@ -61,6 +61,6 @@ class PayOffPowerPut : public AbstractPayOff{
     private:
     double strike;
     double power;
-}
+};
 
 #endif

@@ -26,11 +26,11 @@ class Parameter {
 };
 
 inline double Parameter::integral(double time1, double time2) const {
-    return InnerObjectPtr->integral(time1,time2);
+    return innerObjectPtr->integral(time1,time2);
 }
 
 inline double Parameter::integralSquare(double time1, double time2) const {
-    return InnerObjectPtr->integralSquare(time1,time2);
+    return innerObjectPtr->integralSquare(time1,time2);
 }
 
 class ParameterConstant : public ParameterInner {

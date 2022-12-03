@@ -1,8 +1,10 @@
 #ifndef SIMPLEMC_HPP
 #define SIMPLEMC_HPP
-#include <Option.hpp>
-#include <Parameter.hpp>
+#include "Option.hpp"
+#include "Parameter.hpp"
+#include "Statistic.hpp"
 
-    double simpleMonteCarlo(const VanillaOption& option, double spot,
-                            Parameter& vol, Parameter& r, unsigned long numberOfPaths);
+void simpleMonteCarlo(const VanillaOption& option, double spot, const Parameter& vol, 
+                      const Parameter& r, unsigned long numberOfPaths, StatisticMC& gatherer);
+
 #endif
