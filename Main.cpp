@@ -3,6 +3,8 @@
 #include "Option.hpp"
 #include "Statistic.hpp"
 #include "ConvergenceTable.hpp"
+#include "ParkMiller.hpp"
+#include "AntiThetic.hpp"
 
 int main(){
     double expiry;
@@ -41,7 +43,10 @@ int main(){
     StatisticMean gatherer;
     ConvergenceTable gathererTwo(gatherer);
 
-    simpleMonteCarlo(option, spot, volParam, rParam, numberOfPaths, gathererTwo);
+    RandomParkMiller generator(1);
+    AntiThetic genTwo(generator);
+
+    simpleMonteCarlo(option, spot, volParam, rParam, numberOfPaths, gathererTwo, genTwo);
 
     std::vector<std::vector<double>> results = gathererTwo.getResultsSoFar();
     
