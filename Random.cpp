@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cmath>
 
-double GetOneGaussianBySummation(){
+double getOneGaussianBySummation(){
     double result=0;
     for (unsigned long i=0; i < 12; i++)
         result += std::rand()/static_cast<double>(RAND_MAX);
@@ -10,7 +10,7 @@ double GetOneGaussianBySummation(){
     return result;
 }
 
-double GetOneGaussianByBoxMuller(){
+double getOneGaussianByBoxMuller(){
     double result;
     double x;
     double y;

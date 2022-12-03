@@ -1,6 +1,8 @@
-#ifndef SIMPLEMC_H
-#define SIMPLEMC_H
-#include <PayOff1.h>
-    double SimpleMonteCarlo(const PayOff& thePayOff, double Expiry, double Spot,
-                            double Vol, double r, unsigned long NumberOfPaths);
+#ifndef SIMPLEMC_HPP
+#define SIMPLEMC_HPP
+#include <Option.hpp>
+#include <Parameter.hpp>
+
+    double simpleMonteCarlo(const VanillaOption& option, double spot,
+                            Parameter& vol, Parameter& r, unsigned long numberOfPaths);
 #endif
