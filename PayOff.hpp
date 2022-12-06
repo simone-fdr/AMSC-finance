@@ -63,4 +63,29 @@ class PayOffPowerPut : public PayOff{
     double power;
 };
 
+class PayOffBridge {
+    public:
+    PayOffBridge(const PayOffBridge& original);
+    PayOffBridge(const PayOff& innerPayOff);
+    inline double operator()(double spot) const;
+    ~PayOffBridge();
+    PayOffBridge& operator=(const PayOffBridge& original);
+    private:
+    PayOff* payOffPtr;
+    };
+
+inline double PayOffBridge::operator()(double Spot) const {
+    return payOffPtr->operator ()(Spot);
+}
+
+class PayOffForward : public PayOff {
+    public:
+    PayOffForward(double strike_);
+    virtual double operator()(double spot) const;
+    virtual ~PayOffForward(){}
+    virtual PayOff* clone() const;
+    private:
+    double strike;
+};
+
 #endif

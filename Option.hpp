@@ -1,7 +1,7 @@
 #ifndef OPTION_HPP
 #define OPTION_HPP
 
-#include "PayOffBridge.hpp"
+#include "PayOff.hpp"
 
 class VanillaOption{
     public:
