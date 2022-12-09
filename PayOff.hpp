@@ -1,6 +1,9 @@
 #ifndef PAYOFF_HPP
 #define PAYOFF_HPP
 
+#include <map>
+#include <string>
+
 class PayOff{
     public:
     PayOff(){};
@@ -32,6 +35,9 @@ class PayOffPut : public PayOff {
 
 class PayOffDoubleDigital : public PayOff {
     public:
+    // Generic constructor (In order to be able to use the Factory)
+    PayOffDoubleDigital(double strike_);
+    // Specific constructor
     PayOffDoubleDigital(double lowerLevel_, double upperLevel_);
     virtual PayOff* clone() const;
     virtual double operator()(double spot) const;
@@ -87,5 +93,39 @@ class PayOffForward : public PayOff {
     private:
     double strike;
 };
+
+class PayOffFactory {
+    public:
+    typedef PayOff* (*CreatePayOffFunction)(double);
+    static PayOffFactory& instance();
+    void registerPayOff(std::string, CreatePayOffFunction);
+    PayOff* createPayOff(std::string payOffId, double strike);
+    ~PayOffFactory(){};
+    private:
+    std::map<std::string, CreatePayOffFunction> creatorFunctions;
+    PayOffFactory(){}
+    PayOffFactory(const PayOffFactory&){}
+    PayOffFactory& operator= (const PayOffFactory&){ return *this;}
+};
+
+// HELPER
+
+template <class T>
+class PayOffHelper {
+    public:
+    PayOffHelper(std::string);
+    static PayOff* create(double);
+};
+
+template <class T>
+PayOff* PayOffHelper<T>::create(double strike) {
+    return new T(strike);
+}
+
+template <class T>
+PayOffHelper<T>::PayOffHelper(std::string id) {
+    PayOffFactory& payOffFactory = PayOffFactory::instance();
+    payOffFactory.registerPayOff(id, PayOffHelper<T>::create);
+}
 
 #endif

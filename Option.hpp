@@ -10,6 +10,6 @@ class VanillaOption{
     double payOff(double spot) const;
     private:
     double expiry;
-    PayOff* payOffPtr;
+    PayOffBridge payOffBridge;
 };
 #endif

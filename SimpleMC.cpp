@@ -7,7 +7,6 @@ void simpleMonteCarlo(const VanillaOption& option, double spot, const Parameter&
                       const Parameter& r, unsigned long numberOfPaths, StatisticMC& gatherer, RandomBase& generator){
 
     generator.resetDimensionality(1);
-
     double expiry = option.getExpiry();
     double variance = vol.integralSquare(0, expiry);
     double rootVariance = std::sqrt(variance);
@@ -24,6 +23,5 @@ void simpleMonteCarlo(const VanillaOption& option, double spot, const Parameter&
         double payOff = option.payOff(thisSpot);
         gatherer.dumpOneResult(payOff*discounting);
     }
-
     return;
 }

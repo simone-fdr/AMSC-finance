@@ -12,6 +12,10 @@ class Wrapper {
         dataPtr = inner.clone();
     }
 
+    Wrapper(T* dataPtr_ ) {
+        dataPtr = dataPtr_;
+    }
+
     ~Wrapper() {
         if (dataPtr != 0)
         delete dataPtr;
@@ -26,9 +30,10 @@ class Wrapper {
 
     Wrapper& operator=(const Wrapper<T>& original) {
         if (this != &original) {
-            if (dataPtr != 0)
+            T* newPtr = (original.dataPtr !=0) ? original.dataPtr->clone() : 0;
+            if (dataPtr!=0)
                 delete dataPtr;
-            dataPtr = (original.dataPtr != 0) ? original.DataPtr->clone() : 0;
+            dataPtr = newPtr;
         }
         return *this;
     }

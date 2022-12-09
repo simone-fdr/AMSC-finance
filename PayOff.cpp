@@ -1,6 +1,8 @@
 #include "PayOff.hpp"
 #include <algorithm>
 #include <math.h>
+#include <iostream>
+
 
 PayOffCall::PayOffCall(double strike_) : strike(strike_){}
 
@@ -24,8 +26,11 @@ PayOff* PayOffPut::clone() const {
 }
 
 
-PayOffDoubleDigital::PayOffDoubleDigital(double lowerLevel_, double upperLevel_)
-                                        :lowerLevel(lowerLevel_), upperLevel(upperLevel_){}
+PayOffDoubleDigital::PayOffDoubleDigital(double lowerLevel_, double upperLevel_) :lowerLevel(lowerLevel_), upperLevel(upperLevel_){}
+
+PayOffDoubleDigital::PayOffDoubleDigital(double strike_) :lowerLevel(strike_*1.1), upperLevel(strike_*0.9){}
+
+
 // Checks if it is between low and up
 double PayOffDoubleDigital::operator()(double spot) const {
     return (spot > lowerLevel && spot < upperLevel);
@@ -87,4 +92,34 @@ PayOffForward::PayOffForward(double strike_) : strike(strike_){}
 
 PayOff* PayOffForward::clone() const {
     return new PayOffForward(*this);
+}
+
+//FACTORY
+
+void PayOffFactory::registerPayOff(std::string payOffId, CreatePayOffFunction creatorFunction) {
+    creatorFunctions.insert(std::pair<std::string,CreatePayOffFunction>(payOffId,creatorFunction));
+}
+
+PayOff* PayOffFactory::createPayOff(std::string payOffId, double strike) {
+    std::map<std::string, CreatePayOffFunction>::const_iterator i = creatorFunctions.find(payOffId);
+    if (i == creatorFunctions.end()) {
+        std::cout << payOffId << " is an unknown payoff" << std::endl;
+        return NULL;
+    }
+    return (i->second)(strike);
+}
+
+PayOffFactory& PayOffFactory::instance() {
+    static PayOffFactory factory;
+    return factory;
+}
+
+// Helper
+
+namespace 
+{
+    PayOffHelper<PayOffCall> registerCall("call");
+    PayOffHelper<PayOffPut> registerPut("put");
+    PayOffHelper<PayOffForward> registerForward("forward");
+    PayOffHelper<PayOffDoubleDigital> registerDoubleDigital("doubledigital");
 }

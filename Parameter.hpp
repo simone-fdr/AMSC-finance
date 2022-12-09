@@ -1,6 +1,7 @@
 #ifndef Parameter_HPP
 #define Parameter_HPP
 
+#include <vector>
 class ParameterInner {
     public:
     ParameterInner(){}
@@ -35,13 +36,25 @@ inline double Parameter::integralSquare(double time1, double time2) const {
 
 class ParameterConstant : public ParameterInner {
     public:
-    ParameterConstant(double constant);
+    ParameterConstant(double constant_);
     virtual ParameterInner* clone() const;
     virtual double integral(double time1, double time2) const;
     virtual double integralSquare(double time1, double time2) const;
     private:
     double constant;
     double constantSquare;
+};
+
+class ParameterPiecewiseConstant : public ParameterInner {
+    public:
+    // Points where the values changes, points.size() == constants.size() - 1
+    ParameterPiecewiseConstant(std::vector<double>& constants_, std::vector<double>& points_);
+    virtual ParameterInner* clone() const;
+    virtual double integral(double time1, double time2) const;
+    virtual double integralSquare(double time1, double time2) const;
+    private:
+    std::vector<double> constants;
+    std::vector<double> points;
 };
 
 #endif
