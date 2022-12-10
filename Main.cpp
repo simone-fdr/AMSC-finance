@@ -83,7 +83,8 @@ int main(){
 
 
     auto start = std::chrono::steady_clock::now();
-    simpleMonteCarlo(option, spot, volParam, rParam, numberOfPaths, gathererTwo, genTwo);
+    TimeTerminator terminator(numberOfPaths);
+    monteCarlo(option, spot, volParam, rParam, gathererTwo, genTwo, terminator);
     auto end = std::chrono::steady_clock::now();
     double elapsed_time = double(std::chrono::duration_cast<std::chrono::nanoseconds>(end-start).count());
 

@@ -2,10 +2,19 @@
 #include "SimpleMC.hpp"
 #include <iostream>
 #include <cmath>
+#include <chrono>
 
-void simpleMonteCarlo(const VanillaOption& option, double spot, const Parameter& vol,
-                      const Parameter& r, unsigned long numberOfPaths, StatisticMC& gatherer, RandomBase& generator){
+void generate(RandomBase& generator, FinArray& variates, double thisSpot, double movedSpot,
+                         const VanillaOption& option, StatisticMC& gatherer, double discounting, double rootVariance){
+    generator.getGaussians(variates);
+    thisSpot = movedSpot*std::exp(rootVariance*variates[0]);
+    double payOff = option.payOff(thisSpot);
+    gatherer.dumpOneResult(payOff*discounting);
+}
 
+
+void monteCarlo(const VanillaOption& option, double spot, const Parameter& vol,
+                      const Parameter& r, StatisticMC& gatherer, RandomBase& generator, Terminator& terminator){
     generator.resetDimensionality(1);
     double expiry = option.getExpiry();
     double variance = vol.integralSquare(0, expiry);
@@ -17,11 +26,8 @@ void simpleMonteCarlo(const VanillaOption& option, double spot, const Parameter&
 
     FinArray variates(1);
 
-    for (unsigned long i=0; i < numberOfPaths; i++){
-        generator.getGaussians(variates);
-        thisSpot = movedSpot*std::exp(rootVariance*variates[0]);
-        double payOff = option.payOff(thisSpot);
-        gatherer.dumpOneResult(payOff*discounting);
+    while(!terminator.isTerminated()){
+        generate(generator, variates, thisSpot, movedSpot, option, gatherer, discounting, rootVariance);
     }
     return;
 }
