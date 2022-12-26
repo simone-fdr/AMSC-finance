@@ -1,7 +1,7 @@
 #include "ConvergenceTable.hpp"
 
 ConvergenceTable::ConvergenceTable(const Wrapper<StatisticMC>& inner_): inner(inner_) {
-    stoppingPoint=2;
+    stoppingPoint=99999999;
     pathsDone=0;
 }
 
@@ -13,7 +13,7 @@ void ConvergenceTable::dumpOneResult(double result) {
     inner->dumpOneResult(result);
     pathsDone++;
     if (pathsDone == stoppingPoint) {
-        stoppingPoint*=2;
+        stoppingPoint+=999999999;
         std::vector<std::vector<double>> thisResult(inner->getResultsSoFar());
         for (unsigned long i=0; i < thisResult.size(); i++) {
             thisResult[i].push_back(pathsDone);
@@ -25,7 +25,7 @@ void ConvergenceTable::dumpOneResult(double result) {
 
 std::vector<std::vector<double>> ConvergenceTable::getResultsSoFar() const {
     std::vector<std::vector<double>> tmp(resultsSoFar);
-    if (pathsDone*2 != stoppingPoint) {
+    if (pathsDone+999999999 != stoppingPoint) {
         std::vector<std::vector<double>> thisResult(inner->getResultsSoFar());
         for (unsigned long i=0; i < thisResult.size(); i++) {
         thisResult[i].push_back(pathsDone);

@@ -19,7 +19,7 @@ class ExoticEngine {
     Wrapper<Path> product;
     Parameter r;
     FinArray discounts;
-    mutable std::vector<CashFlow> cashFlows;
+    mutable std::vector<CashFlow> vectCashFlows;
 };
 
 class ExoticBSEngine : public ExoticEngine

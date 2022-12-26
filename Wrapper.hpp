@@ -1,6 +1,8 @@
 #ifndef WRAPPER_HPP
 #define WRAPPER_HPP
 
+#include <memory>
+
 template<class T>
 class Wrapper {
     public:
@@ -135,9 +137,7 @@ class CountedWrapper {
     private:
     // I don't use shared_ptr for dataPtr otherwise it is all automatically implemented, making the exercise trivial
     T* dataPtr;
-    shared_ptr<int> counter;
+    std::shared_ptr<int> counter;
 };
-
-#endif
 
 #endif

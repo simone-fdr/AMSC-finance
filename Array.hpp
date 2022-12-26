@@ -52,4 +52,5 @@ inline double& FinArray::operator[](unsigned long i) {
 inline unsigned long FinArray::size() const {
     return actualSize;
 }
+
 #endif // ifndef FINARRAY_HPP

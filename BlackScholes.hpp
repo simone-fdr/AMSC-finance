@@ -9,4 +9,6 @@ double BlackScholesDigitalCall(double spot, double strike, double r, double d, d
 
 double BlackScholesCallVega( double spot, double strike, double r, double d, double vol, double expiry);
 
+double BlackScholesPutVega( double spot, double strike, double r, double d, double vol, double expiry);
+
 #endif

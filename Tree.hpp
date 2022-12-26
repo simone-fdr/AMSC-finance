@@ -38,7 +38,7 @@ class TreeEuropean : public Tree {
 
 #include <vector>
 #include "Parameter.hpp"
-#include "Array.hpp"
+#include "../Array.hpp"
 
 class BinomialTree {
     public:

@@ -1,5 +1,5 @@
 #include "Tree.hpp"
-#include "Array.hpp"
+#include "../Array.hpp"
 #include <cmath>
 #include <minmax.h>
 

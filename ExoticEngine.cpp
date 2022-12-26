@@ -5,12 +5,12 @@ ExoticEngine::ExoticEngine(const Wrapper<Path>& product_, const Parameter& r_) :
             product(product_), r(r_), discounts(product_->possibleCashFlowTimes()) {
     for (unsigned long i=0; i < discounts.size(); i++)
         discounts[i] = exp(-r.integral(0.0, discounts[i]));
-    cashFlows.resize(product->maxNumberOfCashFlows());
+    vectCashFlows.resize(product->maxNumberOfCashFlows());
 }
 
 void ExoticEngine::doSimulation(StatisticMC& gatherer, unsigned long numberOfPaths) {
     FinArray spotValues(product->getLookAtTimes().size());
-    cashFlows.resize(product->maxNumberOfCashFlows());
+    vectCashFlows.resize(product->maxNumberOfCashFlows());
     double thisValue;
     for (unsigned long i =0; i < numberOfPaths; ++i) {
         getOnePath(spotValues);
@@ -21,10 +21,10 @@ void ExoticEngine::doSimulation(StatisticMC& gatherer, unsigned long numberOfPat
 }
 
 double ExoticEngine::doOnePath(const FinArray& spotValues) const {
-    unsigned long numberFlows = product->cashFlows(spotValues, cashFlows);
+    unsigned long numberFlows = product->cashFlows(spotValues, vectCashFlows);
     double value=0.0;
     for (unsigned i =0; i < numberFlows; ++i)
-        value += cashFlows[i].amount * discounts[cashFlows[i].timeIndex];
+        value += vectCashFlows[i].amount * discounts[vectCashFlows[i].timeIndex];
     return value;
 }
 
