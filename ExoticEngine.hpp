@@ -7,6 +7,8 @@
 #include "Statistic.hpp"
 #include "Random.hpp"
 #include <vector>
+#include <cmath>
+#include <omp.h>
 
 class ExoticEngine {
     public:

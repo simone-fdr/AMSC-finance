@@ -9,6 +9,7 @@ class ConvergenceTable : public StatisticMC {
     virtual StatisticMC* clone() const;
     virtual void dumpOneResult(double result);
     virtual std::vector<std::vector<double>> getResultsSoFar() const;
+    virtual double getResultSoFar() const;
     private:
     Wrapper<StatisticMC> inner;
     std::vector<std::vector<double>> resultsSoFar;

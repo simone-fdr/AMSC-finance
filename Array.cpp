@@ -25,7 +25,7 @@ FinArray::FinArray(const FinArray& original) : actualSize(original.actualSize), 
 }
 
 FinArray::~FinArray() {
-    if (valuesPtr >0)
+    if (*valuesPtr > 0)
     delete [] valuesPtr;
 }
 

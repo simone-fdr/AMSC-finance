@@ -1,5 +1,5 @@
 #include "ExoticEngine.hpp"
-#include <cmath>
+#include <iostream> //TODO remove
 
 ExoticEngine::ExoticEngine(const Wrapper<Path>& product_, const Parameter& r_) :
             product(product_), r(r_), discounts(product_->possibleCashFlowTimes()) {
@@ -23,6 +23,7 @@ void ExoticEngine::doSimulation(StatisticMC& gatherer, unsigned long numberOfPat
 double ExoticEngine::doOnePath(const FinArray& spotValues) const {
     unsigned long numberFlows = product->cashFlows(spotValues, vectCashFlows);
     double value=0.0;
+    //#pragma omp parallel for reduction(+:value)
     for (unsigned i =0; i < numberFlows; ++i)
         value += vectCashFlows[i].amount * discounts[vectCashFlows[i].timeIndex];
     return value;

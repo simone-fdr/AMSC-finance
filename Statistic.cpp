@@ -69,6 +69,26 @@ std::vector<std::vector<double>> Statistics::getResultsSoFar() const {
     return results;
 }
 
+double StatisticMean::getResultSoFar() const {
+    return sum/pathsDone;
+}
+
+//return just the second moment
+double StatisticMoment::getResultSoFar() const {
+    return sum2/pathsDone;
+}
+
+double StatisticVaR::getResultSoFar() const {
+    return sum / pathsDone - worst;
+}
+
+// TODO change or directly delete this whole class
+double Statistics::getResultSoFar() const {
+    return 0;
+}
+
+
+
 void Statistics::addStatistic(StatisticMC& statistic) {
     //Cannot pass without reference and cannot make a pointer to reference
     statistics.emplace_back(Wrapper<StatisticMC>(statistic));
