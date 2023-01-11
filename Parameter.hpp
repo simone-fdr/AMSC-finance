@@ -4,11 +4,11 @@
 #include <vector>
 class ParameterInner {
     public:
-    ParameterInner(){}
+    ParameterInner() = default;
     virtual ParameterInner* clone() const=0;
     virtual double integral(double time1, double time2) const=0;
     virtual double integralSquare(double time1, double time2) const=0;
-    virtual ~ParameterInner(){}
+    virtual ~ParameterInner() = default;
     private:
 };
 

@@ -1,9 +1,10 @@
 #ifndef BS_CALL_HPP
 #define BS_CALL_HPP
+#include "BlackScholes.hpp"
 
 class BS {
     public:
-    BSCall(double r_, double d_, double t_, double spot_, double strike_);
+    BS() = default;
     virtual double price(double Vol) const = 0;
     virtual double vega(double Vol) const = 0;
     private:

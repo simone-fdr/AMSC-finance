@@ -7,12 +7,12 @@
 
 class StatisticMC {
     public:
-    StatisticMC(){}
+    StatisticMC() = default;
     virtual void dumpOneResult(double result)=0;
     virtual std::vector<std::vector<double>> getResultsSoFar() const=0;
     virtual double getResultSoFar() const=0;
     virtual StatisticMC* clone() const=0;
-    virtual ~StatisticMC(){}
+    virtual ~StatisticMC() = default;
     private:
 };
 

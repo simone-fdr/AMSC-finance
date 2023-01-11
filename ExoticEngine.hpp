@@ -15,7 +15,7 @@ class ExoticEngine {
     ExoticEngine(const Wrapper<Path>& product_, const Parameter& r_);
     virtual void getOnePath(FinArray& spotValues)=0;
     void doSimulation(StatisticMC& gatherer, unsigned long numberOfPaths);
-    virtual ~ExoticEngine(){}
+    virtual ~ExoticEngine() = default;
     double doOnePath(const FinArray& spotValues) const;
     private:
     Wrapper<Path> product;
@@ -30,7 +30,7 @@ class ExoticBSEngine : public ExoticEngine
     ExoticBSEngine(const Wrapper<Path>& product_, const Parameter& r_, const Parameter& d_,
                 const Parameter& vol_, const Wrapper<RandomBase>& generator_, double spot_);
     virtual void getOnePath(FinArray& spotValues);
-    virtual ~ExoticBSEngine(){}
+    virtual ~ExoticBSEngine() = default;
     private:
     Wrapper<RandomBase> generator;
     FinArray drifts;

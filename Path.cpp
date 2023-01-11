@@ -9,10 +9,12 @@ const FinArray& Path::getLookAtTimes() const {
 PathAsian::PathAsian(const FinArray& lookAtTimes_, double deliveryTime_, const PayOffBridge& payOff_) :
 Path(lookAtTimes_), deliveryTime(deliveryTime_), payOff(payOff_), numberOfTimes(lookAtTimes_.size()) {}
 
+// Return 1 for simplicity
 unsigned long PathAsian::maxNumberOfCashFlows() const {
     return 1UL;
 }
 
+// Since it only return 1 value, the only time is the expiry date
 FinArray PathAsian::possibleCashFlowTimes() const {
     FinArray tmp(1UL);
     tmp[0] = deliveryTime;

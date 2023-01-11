@@ -1,7 +1,4 @@
 #include "Random.hpp"
-#include "Normal.hpp"
-#include <cstdlib>
-#include <cmath>
 
 void RandomBase::getGaussians(FinArray& variates) {
     getUniforms(variates);

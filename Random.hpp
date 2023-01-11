@@ -2,6 +2,9 @@
 #define RANDOM_HPP
 
 #include "Array.hpp"
+#include "Normal.hpp"
+#include <cstdlib>
+#include <cmath>
 
 class RandomBase {
     public:

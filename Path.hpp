@@ -20,7 +20,7 @@ class Path {
     virtual FinArray possibleCashFlowTimes() const=0;
     virtual unsigned long cashFlows(const FinArray& spotValues, std::vector<CashFlow>& GeneratedFlows) const=0;
     virtual Path* clone() const=0;
-    virtual ~Path(){}
+    virtual ~Path() = default;
     private:
     FinArray lookAtTimes;
 };
@@ -31,7 +31,7 @@ class PathAsian : public Path {
     virtual unsigned long maxNumberOfCashFlows() const;
     virtual FinArray possibleCashFlowTimes() const;
     virtual unsigned long cashFlows(const FinArray& spotValues, std::vector<CashFlow>& generatedFlows) const;
-    virtual ~PathAsian(){}
+    virtual ~PathAsian() = default;
     virtual Path* clone() const;
     private:
     double deliveryTime;

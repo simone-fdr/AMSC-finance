@@ -1,14 +1,9 @@
-#include <cmath>
 #include "Normal.hpp"
 
-const double oneOverRootTwoPi = 0.398942280401433;
-// probability density for a standard Gaussian distribution
 double normalDensity(double x) {
     return oneOverRootTwoPi*std::exp(-x*x/2);
 }
 
-// the InverseCumulativeNormal function via the
-// Beasley-Springer/Moro approximation
 double inverseCumulativeNormal(double u) {
     static double a[4]={ 2.50662823884, -18.61500062529, 41.39119773534, -25.44106049637};
     static double b[4]={-8.47351093090, 23.08336743743, -21.06224101826, 3.13082909833};
@@ -24,15 +19,13 @@ double inverseCumulativeNormal(double u) {
         if (x>0.0)
         r=1.0-u;
         r=std::log(-std::log(r));
-        r=c[0]+r*(c[1]+r*(c[2]+r*(c[3]+r*(c[4]+r*(c[5]+
-        r*(c[6]+r*(c[7]+r*c[8])))))));
+        r=c[0]+r*(c[1]+r*(c[2]+r*(c[3]+r*(c[4]+r*(c[5]+r*(c[6]+r*(c[7]+r*c[8])))))));
         if (x<0.0)
         r=-r;
     }
     return r;
 }
 
-// standard normal cumulative distribution function
 double cumulativeNormal(double x) {
     static double a[5] = { 0.319381530, -0.356563782,
              1.781477937, -1.821255978, 1.330274429};

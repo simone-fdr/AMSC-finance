@@ -1,6 +1,9 @@
 #ifndef FINARRAY_HPP
 #define FINARRAY_HPP
 
+#include<algorithm>
+#include<numeric>
+
 class FinArray {
     public:
     explicit FinArray(unsigned long actualSize=0);

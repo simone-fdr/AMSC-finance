@@ -1,6 +1,4 @@
 #include "BlackScholes.hpp"
-#include "Normal.hpp"
-#include <cmath>
 
 double BlackScholesCall( double spot, double strike, double r, double d, double vol, double expiry) {
     double standardDeviation = vol*std::sqrt(expiry);

@@ -1,6 +1,4 @@
 #include "Array.hpp"
-#include<algorithm>
-#include<numeric>
 
 FinArray::FinArray(unsigned long actualSize_) : actualSize(actualSize_), capacity(actualSize_) {
     if (actualSize > 0) {

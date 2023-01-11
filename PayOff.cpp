@@ -1,8 +1,4 @@
 #include "PayOff.hpp"
-#include <algorithm>
-#include <math.h>
-#include <iostream>
-
 
 PayOffCall::PayOffCall(double strike_) : strike(strike_){}
 

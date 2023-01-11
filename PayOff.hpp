@@ -3,13 +3,16 @@
 
 #include <map>
 #include <string>
+#include <algorithm>
+#include <math.h>
+#include <iostream>
 
 class PayOff{
     public:
-    PayOff(){};
+    PayOff() = default;
     virtual PayOff* clone() const=0;
     virtual double operator()(double spot) const = 0;
-    virtual ~PayOff(){};
+    virtual ~PayOff() = default;
     private:
 };
 
@@ -18,7 +21,7 @@ class PayOffCall : public PayOff {
     PayOffCall(double strike_);
     virtual PayOff* clone() const;
     virtual double operator()(double spot) const;
-    virtual ~PayOffCall(){}
+    virtual ~PayOffCall() = default;
     private:
     double strike;
 };
@@ -28,7 +31,7 @@ class PayOffPut : public PayOff {
     PayOffPut(double strike_);
     virtual PayOff* clone() const;
     virtual double operator()(double spot) const;
-    virtual ~PayOffPut(){}
+    virtual ~PayOffPut() = default;
     private:
     double strike;
 };
@@ -41,7 +44,7 @@ class PayOffDoubleDigital : public PayOff {
     PayOffDoubleDigital(double lowerLevel_, double upperLevel_);
     virtual PayOff* clone() const;
     virtual double operator()(double spot) const;
-    virtual ~PayOffDoubleDigital(){}
+    virtual ~PayOffDoubleDigital() = default;
     private:
     double lowerLevel;
     double upperLevel;
@@ -52,7 +55,7 @@ class PayOffPowerCall : public PayOff{
     PayOffPowerCall(double strike_, double power);
     virtual PayOff* clone() const;
     virtual double operator()(double spot) const;
-    virtual ~PayOffPowerCall(){}
+    virtual ~PayOffPowerCall() = default;
     private:
     double strike;
     double power;
@@ -63,7 +66,7 @@ class PayOffPowerPut : public PayOff{
     PayOffPowerPut(double strike_, double power);
     virtual PayOff* clone() const;
     virtual double operator()(double spot) const;
-    virtual ~PayOffPowerPut(){}
+    virtual ~PayOffPowerPut() = default;
     private:
     double strike;
     double power;
@@ -78,17 +81,17 @@ class PayOffBridge {
     PayOffBridge& operator=(const PayOffBridge& original);
     private:
     PayOff* payOffPtr;
-    };
+};
 
-inline double PayOffBridge::operator()(double Spot) const {
-    return payOffPtr->operator ()(Spot);
+inline double PayOffBridge::operator()(double spot) const {
+    return payOffPtr->operator()(spot);
 }
 
 class PayOffForward : public PayOff {
     public:
     PayOffForward(double strike_);
     virtual double operator()(double spot) const;
-    virtual ~PayOffForward(){}
+    virtual ~PayOffForward() = default;
     virtual PayOff* clone() const;
     private:
     double strike;
@@ -100,10 +103,10 @@ class PayOffFactory {
     static PayOffFactory& instance();
     void registerPayOff(std::string, CreatePayOffFunction);
     PayOff* createPayOff(std::string payOffId, double strike);
-    ~PayOffFactory(){};
+    ~PayOffFactory() = default;
     private:
     std::map<std::string, CreatePayOffFunction> creatorFunctions;
-    PayOffFactory(){}
+    PayOffFactory() = default;
     PayOffFactory(const PayOffFactory&){}
     PayOffFactory& operator= (const PayOffFactory&){ return *this;}
 };
