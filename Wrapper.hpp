@@ -3,6 +3,10 @@
 
 #include <memory>
 
+
+// Class that is a reimplementation of the unique_ptr
+// Is used to manage memory allocation
+//  and to handle polymorphic behaviour
 template<class T>
 class Wrapper {
     public:
@@ -60,6 +64,11 @@ class Wrapper {
     T* dataPtr;
 };
 
+
+// Class that is a reimplementation of the shared_ptr
+// It is not used. It has been created as exercise.
+// Is used to manage memory allocation
+//  and to handle polymorphic behaviour
 template<class T>
 class CountedWrapper {
     public:

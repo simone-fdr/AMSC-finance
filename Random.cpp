@@ -12,4 +12,8 @@ void RandomBase::resetDimensionality(unsigned long newDimensionality) {
     dimensionality = newDimensionality;
 }
 
+unsigned long RandomBase::getDimensionality() const {
+    return dimensionality;
+}
+
 RandomBase::RandomBase(unsigned long dimensionality_) : dimensionality(dimensionality_) {}

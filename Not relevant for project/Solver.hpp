@@ -1,3 +1,4 @@
+
 template<class T>
 double Bisection(double target, double low, double high, double tolerance, T function) {
     double x=0.5*(low+high);

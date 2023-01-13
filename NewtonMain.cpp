@@ -15,7 +15,6 @@ int main() {
     double vol = NewtonRaphson<BS, &BS::price, &BS::vega>(price, initialGuess, tolerance, *bs);
     double value = BlackScholesCall(spot,strike,r,d,vol,expiry);
 
-
     std::cout << "\n vol " << vol << " \nvalue of the option:" << value << "\n";
     return 0;
 }
