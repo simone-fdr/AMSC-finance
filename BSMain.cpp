@@ -1,6 +1,15 @@
 #include "project/BSMain.hpp"
 
-int main() {
+int main(int argc, char* argv[]) {
+    // Setup
+    if(argc != 2){
+        std::cout << "Please execute as ./Black-Scholes #threads" << std::endl;
+        return 1;
+    }
+    int thread_used = std::atoi(argv[1]);
+
+    // Declaration variables
+
     std::vector<double> values; //expiry,strike,spot,vol,r,d
     unsigned long numberOfPaths = 1 << 20;
     unsigned int numberOfDates = 50;
@@ -8,11 +17,11 @@ int main() {
     std::string token;
     FinArray times(numberOfDates);
 
+    // Input file
     std::string input_filename = "input.csv";
-
     std::ifstream inputFile(input_filename);
 
-    // OUTPUT
+    // Output file
     std::string output_filename = "output.csv";
     std::ofstream outputFile(output_filename);
 
@@ -20,9 +29,15 @@ int main() {
         std::cout << "Error while opening a file" << std::endl;
         return 1;
     }
+
+    // Variables used in loop
+    int thread_really_used;
+    double final_result;
     
+    // Main loop
     while(std::getline(inputFile, line)){
 
+        // Inizialize the string like a stream
         std::stringstream str(line);
         values.clear();
         
@@ -41,16 +56,14 @@ int main() {
         ParameterConstant rParam(values[4]);
         ParameterConstant dParam(values[5]);
 
-        double final_result = 0;
-        
-        int thread_used;
+        final_result = 0;
         
         PayOffCall payOff(values[1]);
         PathAsian option(times, values[0], payOff);
 
-        #pragma omp parallel shared(thread_used) num_threads(12)
+        #pragma omp parallel shared(thread_really_used) num_threads(thread_used)
         {
-            thread_used = omp_get_num_threads();
+            thread_really_used = omp_get_num_threads();
             
             StatisticMean gatherer;
 
@@ -59,11 +72,11 @@ int main() {
 
             ExoticBSEngine engine(option, rParam, dParam, volParam, antiGen, values[2]);
 
-            engine.doSimulation(gatherer, numberOfPaths/thread_used);
+            engine.doSimulation(gatherer, numberOfPaths/thread_really_used);
             double result = gatherer.getResultSoFar();
 
             #pragma atomic
-                final_result += result/thread_used;
+                final_result += result/thread_really_used;
         }
         
         outputFile  << values[0] << ',' 
