@@ -68,6 +68,7 @@ int main(int argc, char* argv[]) {
             std::cout << values[i] << " ";
         std::cout << std::endl;
 
+        // Generate elements
         for (unsigned long i=0; i < numberOfDates; i++)
             times[i] = (i+1.0)*values[0]/numberOfDates;
 
@@ -75,11 +76,11 @@ int main(int argc, char* argv[]) {
         ParameterConstant rParam(values[4]);
         ParameterConstant dParam(values[5]);
 
-        final_result = 0;
 
         PayOffCall payOff(values[1]);
         PathAsian option(times, values[0], payOff);
 
+        final_result = 0;
         #pragma omp parallel shared(thread_used, antiGens, values, gatherers, option, rParam, dParam, volParam, numberOfPaths) num_threads(thread_used)
         {
             thread_used = omp_get_num_threads();

@@ -24,4 +24,4 @@ The source file of the main project is BSMain.cpp and all the other file are ins
 
 The NewtonMain.cpp file is not compiled nor used and it is included only to show a different approach to the problem.
 
-<!> There might be unexpected behaviour while reading the input file in a Linux system
+The files have LF endings in order to be compatible with Unix systems
