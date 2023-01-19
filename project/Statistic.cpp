@@ -109,3 +109,29 @@ StatisticMC* StatisticVaR::clone() const {
 StatisticMC* Statistics::clone() const {
     return new Statistics(*this);
 }
+
+void StatisticMean::clear() {
+    sum = 0.0;
+    pathsDone = 0UL;
+}
+
+void StatisticMoment::clear() {
+    sum = 0.0;
+    sum2 = 0.0;
+    sum3 = 0.0;
+    sum4 = 0.0;
+    pathsDone = 0UL;
+}
+
+void StatisticVaR::clear() {
+    sum = 0.0;
+    worst = 0.0;
+    pathsDone = 0UL;
+
+}
+
+void Statistics::clear() {
+    for(auto statistic : statistics){
+        statistic->clear();
+    }
+}

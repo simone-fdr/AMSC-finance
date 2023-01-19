@@ -11,11 +11,15 @@ int main(int argc, char* argv[]) {
     // Declaration variables
 
     std::vector<double> values; //expiry,strike,spot,vol,r,d
-    unsigned long numberOfPaths = 1 << 20;
-    unsigned int numberOfDates = 50;
+    unsigned long numberOfPaths = 1 << 20; // number of samples for Monte Carlo
+    unsigned int numberOfDates = 50; // number of element of time division
+    FinArray times(numberOfDates); // Array with elements of time
+    
+    // Variables to read input
     std::string line;
     std::string token;
-    FinArray times(numberOfDates);
+    // Variable used in loop
+    double final_result;
 
     // Input file
     std::string input_filename = "input.csv";
@@ -30,13 +34,28 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Variables used in loop
-    int thread_really_used;
-    double final_result;
+    std::vector<std::unique_ptr<RandomBase>> generators;
+    //Creates n random number generator with different seeds
+    for(int i = 0; i < thread_used; i++){
+        generators.emplace_back(std::make_unique<RandomParkMiller>(numberOfDates, i));
+    }
     
+    std::vector<AntiThetic> antiGens;
+    // The AntiThetic class is just an interface.
+    // Therefore the real generator needs to exists.
+    // Hence we need a vector for the generators and one for AntiThetic
+    for(int i = 0; i < thread_used; i++){
+        antiGens.emplace_back(*generators[i]);
+    }
+
+    std::vector<std::unique_ptr<StatisticMC>> gatherers;
+    // Creates n gatherers that store the means
+    for(int i = 0; i < thread_used; i++){
+        gatherers.emplace_back(std::make_unique<StatisticMean>());
+    }
+
     // Main loop
     while(std::getline(inputFile, line)){
-
         // Inizialize the string like a stream
         std::stringstream str(line);
         values.clear();
@@ -57,26 +76,24 @@ int main(int argc, char* argv[]) {
         ParameterConstant dParam(values[5]);
 
         final_result = 0;
-        
+
         PayOffCall payOff(values[1]);
         PathAsian option(times, values[0], payOff);
 
-        #pragma omp parallel shared(thread_really_used) num_threads(thread_used)
+        #pragma omp parallel shared(thread_used, antiGens, values, gatherers, option, rParam, dParam, volParam, numberOfPaths) num_threads(thread_used)
         {
-            thread_really_used = omp_get_num_threads();
-            
-            StatisticMean gatherer;
+            thread_used = omp_get_num_threads();
 
-            RandomParkMiller generator(numberOfDates, omp_get_thread_num()); //to set different seeds
-            AntiThetic antiGen(generator);
+            int thread_id = omp_get_thread_num();
+            ExoticBSEngine engine(option, rParam, dParam, volParam, antiGens[thread_id], values[2]);
 
-            ExoticBSEngine engine(option, rParam, dParam, volParam, antiGen, values[2]);
 
-            engine.doSimulation(gatherer, numberOfPaths/thread_really_used);
-            double result = gatherer.getResultSoFar();
+            gatherers[thread_id]->clear();
+            engine.doSimulation(*gatherers[thread_id], numberOfPaths/thread_used);
+            double result = gatherers[thread_id]->getResultSoFar();
 
             #pragma atomic
-                final_result += result/thread_really_used;
+                final_result += result/thread_used;
         }
         
         outputFile  << values[0] << ',' 

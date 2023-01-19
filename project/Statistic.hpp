@@ -15,6 +15,8 @@ class StatisticMC {
     virtual std::vector<std::vector<double>> getResultsSoFar() const=0;
     //! @returns the most significant result accumulated untile this function call
     virtual double getResultSoFar() const=0;
+    // Clears the history of data accumulated
+    virtual void clear() = 0;
     // Clone constructor
     virtual StatisticMC* clone() const=0;
     // Deconstructor
@@ -31,6 +33,8 @@ class StatisticMean : public StatisticMC {
     virtual std::vector<std::vector<double>> getResultsSoFar() const;
     //! @returns the mean result accumulated untile this function call
     virtual double getResultSoFar() const;
+    // Clears the history of data accumulated
+    virtual void clear();
     // Clone constructor
     virtual StatisticMC* clone() const;
     private:
@@ -49,6 +53,8 @@ class StatisticMoment : public StatisticMC {
     virtual std::vector<std::vector<double>> getResultsSoFar() const;
     //! @returns the second moment of results accumulated untile this function call
     virtual double getResultSoFar() const;
+    // Clears the history of data accumulated
+    virtual void clear();
     // Clone constructor
     virtual StatisticMC* clone() const;
     private:
@@ -73,6 +79,8 @@ class StatisticVaR : public StatisticMC {
     virtual std::vector<std::vector<double>> getResultsSoFar() const;
     //! @returns the Value at Risk of results accumulated untile this function call
     virtual double getResultSoFar() const;
+    // Clears the history of data accumulated
+    virtual void clear();
     // Clone constructor
     virtual StatisticMC* clone() const;
     private:
@@ -95,6 +103,8 @@ class Statistics : public StatisticMC {
     virtual std::vector<std::vector<double>> getResultsSoFar() const;
     //! @returns the most significant statistic 
     virtual double getResultSoFar() const;
+    // Clears the history of data accumulated
+    virtual void clear();
     // Clone constructor
     virtual StatisticMC* clone() const;
     //! @param statistic added to the vector
