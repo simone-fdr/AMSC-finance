@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
     }
 
     std::vector<std::unique_ptr<RandomBase>> generators;
-    //Creates n random number generator with different seeds
+    // Creates n random number generator with different seeds
     for(int i = 0; i < thread_used; i++){
         generators.emplace_back(std::make_unique<RandomParkMiller>(numberOfDates, i));
     }
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
             std::cout << values[i] << " ";
         std::cout << std::endl;
 
-        // Generate elements
+        // Generate finite element in time
         for (unsigned long i=0; i < numberOfDates; i++)
             times[i] = (i+1.0)*values[0]/numberOfDates;
 
@@ -83,11 +83,8 @@ int main(int argc, char* argv[]) {
         final_result = 0;
         #pragma omp parallel shared(thread_used, antiGens, values, gatherers, option, rParam, dParam, volParam, numberOfPaths) num_threads(thread_used)
         {
-            thread_used = omp_get_num_threads();
-
             int thread_id = omp_get_thread_num();
             ExoticBSEngine engine(option, rParam, dParam, volParam, antiGens[thread_id], values[2]);
-
 
             gatherers[thread_id]->clear();
             engine.doSimulation(*gatherers[thread_id], numberOfPaths/thread_used);
