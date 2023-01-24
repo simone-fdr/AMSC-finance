@@ -33,6 +33,13 @@ The Monte Carlo simulation is run in parallel among the thread and the final res
 ## How to test
 
 Use the command "make" to compile the program
+      
+    make
+
+Then run as ./Black-Scholes #numberThreads e.g.
+       
+    ./Black-Scholes 8
+
 
 The "input.csv" file that has been already provided
 
