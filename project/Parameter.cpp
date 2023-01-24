@@ -64,7 +64,7 @@ double ParameterPiecewiseConstant::integral(double time1, double time2) const {
     if(points.back() < time1)
         return (time2-time1)*constants.back();
 
-    int i;
+    std::size_t i;
     double result = 0;
     bool first = true;
     for(i = 0; i < points.size(); i++){
@@ -87,7 +87,7 @@ double ParameterPiecewiseConstant::integralSquare(double time1, double time2) co
     if(points.back() < time1)
         return (time2-time1)*constants.back()*constants.back();
 
-    int i;
+    std::size_t i;
     double result = 0;
     bool first = true;
     for(i = 0; i < points.size(); i++){

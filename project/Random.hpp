@@ -27,6 +27,8 @@ class RandomBase {
     virtual void getGaussians(FinArray& variates);
     //! @param newDimensionality to be set
     virtual void resetDimensionality(unsigned long newDimensionality);
+    // Deconstructor
+    virtual ~RandomBase() = default;
     private:
     // Dimension of number to be generated
     unsigned long dimensionality;

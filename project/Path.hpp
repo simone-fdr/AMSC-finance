@@ -8,10 +8,10 @@
 // Data class that stores information
 class CashFlow {
     public:
-    // Number of cash flowes to calculate
-    double amount;
     // Index of times for each cash flow
     unsigned long timeIndex;
+    // Number of cash flowes to calculate
+    double amount;
     CashFlow(unsigned long timeIndex_=0UL, double amount_=0.0) : timeIndex(timeIndex_), amount(amount_){};
 };
 

@@ -52,7 +52,7 @@ class Wrapper {
         return *dataPtr;
     }
 
-    const T* const operator->() const {
+    const T* operator->() const {
         return dataPtr;
     }
 
@@ -126,7 +126,7 @@ class CountedWrapper {
         return *dataPtr;
     }
 
-    const T* const operator->() const {
+    const T* operator->() const {
         return dataPtr;
     }
 

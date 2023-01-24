@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
             engine.doSimulation(*gatherers[thread_id], numberOfPaths/thread_used);
             double result = gatherers[thread_id]->getResultSoFar();
 
-            #pragma atomic
+            #pragma omp atomic
                 final_result += result/thread_used;
         }
         

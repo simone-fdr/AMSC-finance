@@ -25,7 +25,7 @@ void StatisticVaR::dumpOneResult(double result) {
 }
 
 void Statistics::dumpOneResult(double result) {
-    for(int i = 0; i < statistics.size(); i++){
+    for(std::size_t i = 0; i < statistics.size(); i++){
         statistics[i]->dumpOneResult(result);
     }
 }
@@ -59,10 +59,10 @@ std::vector<std::vector<double>> StatisticVaR::getResultsSoFar() const {
 std::vector<std::vector<double>> Statistics::getResultsSoFar() const {
     std::vector<std::vector<double>> results(statistics.size());
     std::vector<std::vector<double>> tmp;
-    for(int i = 0; i < statistics.size(); i++){
+    for(std::size_t i = 0; i < statistics.size(); i++){
         tmp = statistics[i]->getResultsSoFar();
         results.resize(tmp[0].size());
-        for(int j = 0; j < tmp[0].size(); j++){
+        for(std::size_t j = 0; j < tmp[0].size(); j++){
             results[i][j] = tmp[0][j];
         }
     }
